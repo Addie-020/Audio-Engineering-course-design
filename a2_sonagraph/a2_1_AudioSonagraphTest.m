@@ -49,8 +49,8 @@ waveDemeanFramedRest = waveFramedRest - muWaveFramedRest;
 waveZeroMean = reshape(waveDemeanFramed, numTotFrame, 1);
 
 % Cut out signal
-tmin = 35;
-tmax = 38;
+tmin = 36.45;
+tmax = 36.475;
 M1 = uint32(tmin*Fs+1);
 M2 = uint32(tmax*Fs);
 waveTest = waveZeroMean(M1 : M2);
