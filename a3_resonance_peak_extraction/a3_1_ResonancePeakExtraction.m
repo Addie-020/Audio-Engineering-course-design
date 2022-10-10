@@ -45,13 +45,13 @@ audioSig = 50 * audioSig;
 %%% Calculate Cepstrum of the Signal
 
 % Add window to signal
-lenWin = lenSig;
+lenWin = 2^nextpow2(lenSig);
 idxWin = 0 : 1 : lenWin-1;
 winSig = 0.54 - 0.46*cos(2*pi*idxWin/lenWin);
-sigWindowed = audioSig.*winSig;
+sigWindowed = [audioSig, zeros(1, lenWin-lenSig)].*winSig;
 
 % FFT for input signal (Step 1)
-nfft = 2^nextpow2(lenSig);
+nfft = lenWin;
 sigFFT = fft(sigWindowed, nfft);
 % Logrithmatic operation for spectrum (Step 2)
 logFFT = log(abs(sigFFT));
@@ -84,7 +84,7 @@ chanImpCeps = [chanImpCeps zeros(1, nfft-2*maxChan-1) chanImpCeps(end:-1:2)];
 chanImpRespFFT = fft(chanImpCeps);
 
 % Calculate the log power spectrum of channel impluse response
-chanLogPwrSpec = chanImpRespFFT(1 : nfft/2);
+chanLogPwrSpec = real(chanImpRespFFT(1 : nfft/2));
 chanLogPwrSpec(2:end-1) = 2 * chanLogPwrSpec(2:end-1);
 
 
@@ -95,24 +95,30 @@ cepsPlot.WindowState = 'maximized';
 % Plot power spectrum
 subplot(2, 2, 1);
 plot(idxTime(1:lenSig), audioSig, 'Color', '#0072BD', 'LineWidth', 2);
-xlabel('\bf Time (ms)', 'Interpreter', 'latex', 'FontSize', 20);
-ylabel('\bf Amplitude', 'Interpreter', 'latex', 'FontSize', 20);
-set(gca, 'FontSize', 20);
+title('\bf Time Domain Audio Signal', 'Interpreter', 'latex', 'FontSize', 20)
+xlabel('\bf Time (ms)', 'Interpreter', 'latex', 'FontSize', 18);
+ylabel('\bf Amplitude', 'Interpreter', 'latex', 'FontSize', 18);
+set(gca, 'FontSize', 18);
 subplot(2, 2, 2);
 plot(idxFreq, pwrSpec, 'Color', '#0072BD', 'LineWidth', 2);
-xlabel('\bf Frequency (Hz)', 'Interpreter', 'latex', 'FontSize', 20);
-ylabel('\bf Spectrum', 'Interpreter', 'latex', 'FontSize', 20);
-set(gca, 'FontSize', 20);
+title('\bf Power Spectrum', 'Interpreter', 'latex', 'FontSize', 20)
+xlabel('\bf Frequency (Hz)', 'Interpreter', 'latex', 'FontSize', 18);
+ylabel('\bf Spectrum', 'Interpreter', 'latex', 'FontSize', 18);
+set(gca, 'FontSize', 18);
 subplot(2, 2, 3);
 hold on
+title('\bf Logrithmatic Power Spectrum', 'Interpreter', 'latex', 'FontSize', 20)
 plot(idxFreq, logPwrSpec, 'Color', '#0072BD', 'LineWidth', 2);
-plot(idxFrchanLogPwrSpec)
-xlabel('\bf Frequency (Hz)', 'Interpreter', 'latex', 'FontSize', 20);
-ylabel('\bf Logrithmatic Spectrum', 'Interpreter', 'latex', 'FontSize', 20);
-set(gca, 'FontSize', 20);
+plot(idxFreq, chanLogPwrSpec, 'Color', '#D95319', 'LineWidth', 2);
+hold off
+xlabel('\bf Frequency (Hz)', 'Interpreter', 'latex', 'FontSize', 18);
+ylabel('\bf Logrithmatic Spectrum', 'Interpreter', 'latex', 'FontSize', 18);
+legend('Audio signal', 'Channel impulse')
+set(gca, 'FontSize', 18);
 subplot(2, 2, 4);
 plot(idxTime, sigCeps, 'Color', '#0072BD', 'LineWidth', 2);
-xlabel('\bf Time (ms)', 'Interpreter', 'latex', 'FontSize', 20);
-ylabel('\bf Cepstrum', 'Interpreter', 'latex', 'FontSize', 20);
-set(gca, 'FontSize', 20);
+title('\bf Cepstrum', 'Interpreter', 'latex', 'FontSize', 18)
+xlabel('\bf Time (ms)', 'Interpreter', 'latex', 'FontSize', 18);
+ylabel('\bf Cepstrum', 'Interpreter', 'latex', 'FontSize', 18);
+set(gca, 'FontSize', 18);
 
