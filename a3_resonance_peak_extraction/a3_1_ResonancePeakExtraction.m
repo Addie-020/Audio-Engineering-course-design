@@ -18,9 +18,6 @@ Fs = 10000;                                 % Sampling frequency
 % Read audio from file
 [audioIn, originalFs] = audioread('.\project_intro_terahertz_p1.m4a');
 
-% Enhance voice level
-audioIn = audioIn * 1;
-
 % Detect the number of sound tracks
 numTracks = size(audioIn, 2);
 
@@ -31,15 +28,15 @@ trackA = audioIn(:, 1);
 signalResampled = resample(trackA, Fs, originalFs);
 
 % Cut out signal (25ms)
-tmin = 36.450;
-tmax = 36.475;
+tmin = 36.300;
+tmax = 36.400;
 M1 = uint32(tmin*Fs+1);
 M2 = uint32(tmax*Fs);
 audioSig = signalResampled(M1 : M2).';
 lenSig = length(audioSig);
 
 % Signal pre-emphasis
-audioSig = 50 * audioSig;
+audioSig = 5 * audioSig;
 
 
 %%% Calculate Cepstrum of the Signal
@@ -97,13 +94,13 @@ subplot(2, 2, 1);
 plot(idxTime(1:lenSig), audioSig, 'Color', '#0072BD', 'LineWidth', 2);
 title('\bf Time Domain Audio Signal', 'Interpreter', 'latex', 'FontSize', 20)
 xlabel('\bf Time (ms)', 'Interpreter', 'latex', 'FontSize', 18);
-ylabel('\bf Amplitude', 'Interpreter', 'latex', 'FontSize', 18);
+ylabel('\bf Amplitude (V)', 'Interpreter', 'latex', 'FontSize', 18);
 set(gca, 'FontSize', 18);
 subplot(2, 2, 2);
 plot(idxFreq, pwrSpec, 'Color', '#0072BD', 'LineWidth', 2);
 title('\bf Power Spectrum', 'Interpreter', 'latex', 'FontSize', 20)
 xlabel('\bf Frequency (Hz)', 'Interpreter', 'latex', 'FontSize', 18);
-ylabel('\bf Spectrum', 'Interpreter', 'latex', 'FontSize', 18);
+ylabel('\bf Spectrum (V/Hz)', 'Interpreter', 'latex', 'FontSize', 18);
 set(gca, 'FontSize', 18);
 subplot(2, 2, 3);
 hold on
@@ -112,13 +109,13 @@ plot(idxFreq, logPwrSpec, 'Color', '#0072BD', 'LineWidth', 2);
 plot(idxFreq, chanLogPwrSpec, 'Color', '#D95319', 'LineWidth', 2);
 hold off
 xlabel('\bf Frequency (Hz)', 'Interpreter', 'latex', 'FontSize', 18);
-ylabel('\bf Logrithmatic Spectrum', 'Interpreter', 'latex', 'FontSize', 18);
-legend('Audio signal', 'Channel impulse')
+ylabel('\bf Amplitude (V)', 'Interpreter', 'latex', 'FontSize', 18);
+legend('Log Power Spectrum of Audio signal', 'Log Power Spectrum of Channel impulse Response')
 set(gca, 'FontSize', 18);
 subplot(2, 2, 4);
 plot(idxTime, sigCeps, 'Color', '#0072BD', 'LineWidth', 2);
 title('\bf Cepstrum', 'Interpreter', 'latex', 'FontSize', 18)
 xlabel('\bf Time (ms)', 'Interpreter', 'latex', 'FontSize', 18);
-ylabel('\bf Cepstrum', 'Interpreter', 'latex', 'FontSize', 18);
+ylabel('\bf Amplitude (V)', 'Interpreter', 'latex', 'FontSize', 18);
 set(gca, 'FontSize', 18);
 
