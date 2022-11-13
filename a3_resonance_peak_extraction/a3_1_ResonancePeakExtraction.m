@@ -9,11 +9,11 @@ clear
 close all
 clc
 
-%%% Define Parameters
+%% Define Parameters
 Fs = 10000;                                 % Sampling frequency
 
 
-%%% Pre-Processing
+%% Pre-Processing
 
 % Read audio from file
 [audioIn, originalFs] = audioread('.\project_intro_terahertz_p1.m4a');
@@ -39,7 +39,7 @@ lenSig = length(audioSig);
 audioSig = 5 * audioSig;
 
 
-%%% Calculate Cepstrum of the Signal
+%% Calculate Cepstrum of the Signal
 
 % Add window to signal
 lenWin = 2^nextpow2(lenSig);
@@ -60,7 +60,7 @@ idxTime = (0 : nfft-1) / Fs * 1000;         % Time index (ms)
 idxFreq = (0 : nfft/2-1) * Fs / nfft;       % Frequency index (Hz)
 
 
-%%% Calculate power spectrum and log power spectrum of the signal
+%% Calculate power spectrum and log power spectrum of the signal
 
 % Calculate power spectrum
 pwrSpec2 = abs(sigFFT/nfft);
@@ -72,7 +72,7 @@ logPwrSpec = logFFT(1 : nfft/2);
 logPwrSpec(2:end-1) = 2 * logPwrSpec(2:end-1);
 
 
-%%% Derive the cepstrum of the channel impulse response
+%% Derive the cepstrum of the channel impulse response
 
 % Calculate the log FFT of channel impulse response
 maxChan = 24;                               % Maximum index of valid channel impulse response
@@ -85,7 +85,7 @@ chanLogPwrSpec = real(chanImpRespFFT(1 : nfft/2));
 chanLogPwrSpec(2:end-1) = 2 * chanLogPwrSpec(2:end-1);
 
 
-%%% Plot
+%% Plot
 cepsPlot = figure(1);
 cepsPlot.WindowState = 'maximized';
 

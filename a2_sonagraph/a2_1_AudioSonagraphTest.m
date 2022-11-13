@@ -1,4 +1,4 @@
-% Description:  Homework for 2nd week
+% Description:  Homework for 3rd week
 %               Plot the sonagraph of a given piece of voice
 %               Use MATLAB Signal Processing Toolbox
 % Projet:       Audio Engineering
