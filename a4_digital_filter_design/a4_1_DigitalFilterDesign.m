@@ -113,7 +113,7 @@ plot(wIdxWin/pi, 20*log10(hwBpAmp), 'Color', '#0072BD', 'LineWidth', 2);
 title('\bf Amplitude-Frequency Response of BPF', 'Interpreter', 'latex', ...
     'FontSize', 18)
 xlabel('\bf $\omega\ (\pi\ rad)$', 'Interpreter', 'latex', 'FontSize', 18);
-ylabel('\bf $\vert H_{BP}(\omega)\vert$', 'Interpreter', 'latex', 'FontSize', 18);
+ylabel('\bf $H_{BP}(\omega)\ (dB)$', 'Interpreter', 'latex', 'FontSize', 18);
 xlim([0 1]);
 ylim([-120 20]);
 set(gca, 'FontSize', 18);
@@ -123,7 +123,7 @@ plot(wIdxWin/pi, hwBpAng, 'Color', '#0072BD', 'LineWidth', 2);
 title('\bf Phase-Frequency Response of BPF', 'Interpreter', 'latex', ...
     'FontSize', 18)
 xlabel('\bf $\omega\ (\pi\ rad)$', 'Interpreter', 'latex', 'FontSize', 18);
-ylabel('\bf $\vert \phi_{BP}(\omega)\vert\ (rad)$', 'Interpreter', 'latex', 'FontSize', 18);
+ylabel('\bf $\phi_{BP}(\omega)\ (rad)$', 'Interpreter', 'latex', 'FontSize', 18);
 xlim([0 1]);
 ylim([-1.2*pi 1.2*pi]);
 set(gca, 'FontSize', 18);
